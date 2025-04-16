@@ -4,6 +4,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "bin": {
+    "contentkit": "./distribution/index.js"
+  },
   "packageManager": "pnpm@10.8.0",
   "scripts": {
     "build": "tsc -b"
