@@ -1,7 +1,7 @@
 {
   "name": "@ckjs/cli",
   "version": "0.0.1",
-  "description": "Command line interface for ContentKit.",
+  "description": "Command line interface for ContentKit",
   "publishConfig": {
     "access": "public"
   },

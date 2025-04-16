@@ -1,7 +1,7 @@
 {
   "name": "@ckjs/utils",
   "version": "0.0.1",
-  "description": "Utility functions for ContentKit.",
+  "description": "Utility functions for ContentKit",
   "publishConfig": {
     "access": "public"
   },
