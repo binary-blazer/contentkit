@@ -21,7 +21,9 @@
   "license": "BSD-3-Clause",
   "exports": {
     "./load-config": "./distribution/load-config.js",
-    "./load-config.d.ts": "./distribution/load-config.d.ts"
+    "./load-config.d.ts": "./distribution/load-config.d.ts",
+    "./logger": "./distribution/logger.js",
+    "./logger.d.ts": "./distribution/logger.d.ts"
   },
   "dependencies": {
     "ts-node": "^10.9.2"

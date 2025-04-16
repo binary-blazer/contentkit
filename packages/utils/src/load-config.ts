@@ -3,6 +3,7 @@ import process from "node:process";
 import fs from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { transpileModule, ModuleKind } from "typescript";
+import { logger } from "./logger";
 
 export async function loadConfig(): Promise<any> {
   const configNames = [
@@ -40,7 +41,7 @@ export async function loadConfig(): Promise<any> {
     }
   }
 
-  throw new Error("No contentkit config found");
+  throw new Error("CONFIG_NOT_FOUND");
 }
 
 async function importFromString(code: string, filename: string): Promise<any> {

@@ -10,8 +10,7 @@
   "author": "",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@contentkit/types": "workspace:*",
-    "@contentkit/generated": "workspace:*"
+    "contentkit": "workspace:*"
   },
   "packageManager": "pnpm@10.8.0"
 }

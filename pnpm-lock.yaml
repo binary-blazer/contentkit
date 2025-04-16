@@ -14,12 +14,9 @@ importers:
 
   examples/blog:
     dependencies:
-      '@contentkit/generated':
+      contentkit:
         specifier: workspace:*
-        version: link:../../packages/generated
-      '@contentkit/types':
-        specifier: workspace:*
-        version: link:../../packages/types
+        version: link:../../packages/contentkit
 
   packages/cli:
     dependencies:

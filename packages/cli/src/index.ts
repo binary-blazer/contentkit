@@ -1,19 +1,24 @@
 #!/usr/bin/env node
 import { build } from "@contentkit/core/build";
 import { loadConfig } from "@contentkit/utils/load-config";
+import { logger, colors } from "@contentkit/utils/logger";
 import process from "node:process";
 
 async function main() {
-  const config = await loadConfig();
-  const now = Date.now();
-  await build(config);
-  console.log(`✅ Content build completed in ${formatTime(Date.now() - now)}`);
+  try {
+    const config = await loadConfig();
+    const now = Date.now();
+    await build(config);
+    logger.success(
+      `Content build completed [${colors.gray}${formatTime(Date.now() - now)}${colors.reset}]`,
+    );
+  } catch (err) {
+    logger.error("No contentkit config found", (err as any).message);
+    process.exit(1);
+  }
 }
 
-main().catch((err) => {
-  console.error("❌ Build failed:", err);
-  process.exit(1);
-});
+main();
 
 function formatTime(ms: number) {
   const miliseconds = ms % 1000;
