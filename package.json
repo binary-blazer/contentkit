@@ -1,6 +1,6 @@
 {
   "name": "contentkit",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "The monorepo for the ContentKit SDK",
   "workspaces": [
@@ -12,9 +12,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "scripts:uv": "tsx scripts/updateVersion.ts",
+    "scripts:publish": "tsx scripts/publishPackages.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": {
     "name": "Jonas Franke <@binary-blazer>",
     "email": "me@binaryblazer.me",
