@@ -27,6 +27,24 @@ const publishPackage = (packageDir: string) => {
   const packageName = packageJSON.name;
   const packageVersion = packageJSON.version;
 
+  const dependencies = packageJSON.dependencies || {};
+  const devDependencies = packageJSON.devDependencies || {};
+
+  for (const [depName, depVersion] of Object.entries({
+    ...dependencies,
+    ...devDependencies,
+  })) {
+    if (depName.startsWith("@ckjs/") && depVersion === "workspace:*") {
+      dependencies[depName] = packageVersion;
+      devDependencies[depName] = packageVersion;
+    }
+  }
+
+  packageJSON.dependencies = dependencies;
+  packageJSON.devDependencies = devDependencies;
+
+  fs.writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
+
   console.log(
     `${colors.gray}${truncatePath(packageDir, 60)}${colors.reset}: ${colors.yellow}publishing ${packageName}@${packageVersion}${colors.reset}...`,
   );
