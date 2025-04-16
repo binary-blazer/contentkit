@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Jonas Franke and the ContentKit Contributors
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 import fs from "node:fs/promises";
 import matter from "gray-matter";
 import path from "node:path";

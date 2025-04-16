@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Jonas Franke and the ContentKit Contributors
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";

@@ -13,6 +13,7 @@
     "format:check": "prettier --check .",
     "scripts:uv": "tsx scripts/updateVersion.ts",
     "scripts:publish": "tsx scripts/publishPackages.ts",
+    "scripts:copyright": "tsx scripts/updateCopyright.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {

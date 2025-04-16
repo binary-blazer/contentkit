@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Jonas Franke and the ContentKit Contributors
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 export type ContentKitConfig = {
   contentDirPath: string;
   documentTypes: DocumentTypeDefinition[];
@@ -17,4 +22,6 @@ export type FieldType = {
 export type ParsedContent = {
   typeName: string;
   data: Record<string, any>;
+  raw: string;
+  html: string;
 };

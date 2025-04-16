@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import { build } from "@ckjs/core/build";
 import { loadConfig } from "@ckjs/utils/load-config";
 import { logger, colors } from "@ckjs/utils/logger";
