@@ -28,17 +28,14 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@contentkit/cli": "workspace:*",
-    "@contentkit/generated": "workspace:*",
-    "@contentkit/types": "workspace:*"
+    "@ckjs/cli": "workspace:*",
+    "@ckjs/types": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
   },
   "exports": {
-    "./generated": "./distribution/generated.js",
-    "./generated.d.ts": "./distribution/generated.d.ts",
     "./types": "./distribution/types.js",
     "./types.d.ts": "./distribution/types.d.ts"
   }

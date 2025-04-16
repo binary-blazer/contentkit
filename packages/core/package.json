@@ -1,5 +1,5 @@
 {
-  "name": "@contentkit/core",
+  "name": "@ckjs/core",
   "version": "1.0.0",
   "description": "Core library for ContentKit.",
   "publishConfig": {
@@ -15,7 +15,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@contentkit/types": "workspace:*",
+    "@ckjs/types": "workspace:*",
     "globby": "^14.1.0",
     "gray-matter": "^4.0.3",
     "marked": "^15.0.8"

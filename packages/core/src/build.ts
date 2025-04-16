@@ -4,7 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import { globby } from "globby";
 import { marked } from "marked";
-import type { ContentKitConfig, ParsedContent } from "@contentkit/types";
+import type { ContentKitConfig, ParsedContent } from "@ckjs/types";
 
 function generateTypeScriptTypesFile(
   config: ContentKitConfig,

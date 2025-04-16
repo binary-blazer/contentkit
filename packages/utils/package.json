@@ -1,5 +1,5 @@
 {
-  "name": "@contentkit/utils",
+  "name": "@ckjs/utils",
   "version": "1.0.0",
   "description": "Utility functions for ContentKit.",
   "publishConfig": {
@@ -10,8 +10,7 @@
     "build": "tsc -b"
   },
   "devDependencies": {
-    "@types/node": "^22.14.1",
-    "typescript": "^5.8.3"
+    "@types/node": "^22.14.1"
   },
   "files": [
     "distribution",
@@ -26,6 +25,7 @@
     "./logger.d.ts": "./distribution/logger.d.ts"
   },
   "dependencies": {
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

@@ -20,10 +20,10 @@ importers:
 
   packages/cli:
     dependencies:
-      '@contentkit/core':
+      '@ckjs/core':
         specifier: workspace:*
         version: link:../core
-      '@contentkit/utils':
+      '@ckjs/utils':
         specifier: workspace:*
         version: link:../utils
     devDependencies:
@@ -36,13 +36,10 @@ importers:
 
   packages/contentkit:
     dependencies:
-      '@contentkit/cli':
+      '@ckjs/cli':
         specifier: workspace:*
         version: link:../cli
-      '@contentkit/generated':
-        specifier: workspace:*
-        version: link:../generated
-      '@contentkit/types':
+      '@ckjs/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
@@ -55,7 +52,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@contentkit/types':
+      '@ckjs/types':
         specifier: workspace:*
         version: link:../types
       globby:
@@ -78,15 +75,6 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  packages/generated:
-    devDependencies:
-      '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-
   packages/types:
     devDependencies:
       typescript:
@@ -98,13 +86,13 @@ importers:
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.14.1)(typescript@5.8.3)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
     devDependencies:
       '@types/node':
         specifier: ^22.14.1
         version: 22.14.1
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
 
 packages:
 

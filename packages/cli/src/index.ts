@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { build } from "@contentkit/core/build";
-import { loadConfig } from "@contentkit/utils/load-config";
-import { logger, colors } from "@contentkit/utils/logger";
+import { build } from "@ckjs/core/build";
+import { loadConfig } from "@ckjs/utils/load-config";
+import { logger, colors } from "@ckjs/utils/logger";
 import process from "node:process";
 
 async function main() {
