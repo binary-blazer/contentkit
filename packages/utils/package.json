@@ -1,0 +1,24 @@
+{
+  "name": "@contentkit/utils",
+  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.8.0",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "files": [
+    "distribution",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    "./load-config": "./distribution/load-config.js",
+    "./load-config.d.ts": "./distribution/load-config.d.ts"
+  }
+}

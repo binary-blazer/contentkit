@@ -1,0 +1,21 @@
+{
+  "name": "@contentkit/types",
+  "version": "1.0.0",
+  "main": "./distribution/index.js",
+  "types": "./distribution/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.8.0",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "files": [
+    "distribution",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

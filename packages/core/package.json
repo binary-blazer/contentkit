@@ -1,0 +1,29 @@
+{
+  "name": "@contentkit/core",
+  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.8.0",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@contentkit/types": "workspace:*",
+    "globby": "^14.1.0",
+    "gray-matter": "^4.0.3"
+  },
+  "files": [
+    "distribution",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    "./build": "./distribution/build.js",
+    "./build.d.ts": "./distribution/build.d.ts"
+  }
+}

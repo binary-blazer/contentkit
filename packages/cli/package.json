@@ -1,0 +1,24 @@
+{
+  "name": "@contentkit/cli",
+  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.8.0",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "files": [
+    "distribution",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@contentkit/utils": "workspace:*",
+    "@contentkit/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  }
+}
