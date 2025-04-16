@@ -25,6 +25,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Verify NPM_TOKEN
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "NPM_TOKEN is not set. Please configure it in the repository secrets."
+            exit 1
+          fi
+
       - name: Verify versions
         run: pnpm scripts:uv
 
