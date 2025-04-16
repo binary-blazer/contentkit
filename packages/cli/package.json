@@ -13,7 +13,8 @@
   "packageManager": "pnpm@10.8.0",
   "license": "BSD-3-Clause",
   "scripts": {
-    "build": "tsc -b"
+    "build": "tsc -b",
+    "scripts:publish": "npm publish --access public --provenance --no-git-checks"
   },
   "files": [
     "distribution",
