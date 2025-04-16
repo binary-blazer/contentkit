@@ -2,6 +2,9 @@
 
 Core library for ContentKit.
 
+> [!CAUTION]
+> **This project is under construction** and is not fully tested and expected to be entirely working yet. Please use with caution however we do not recommend using this in production yet.
+
 ## Installation
 
 ```bash
