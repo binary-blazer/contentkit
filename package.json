@@ -1,6 +1,8 @@
 {
   "name": "contentkit",
   "version": "1.0.0",
+  "type": "module",
+  "description": "The monorepo for the ContentKit SDK",
   "workspaces": [
     "packages/*",
     "examples/*"
@@ -17,7 +19,7 @@
     "email": "me@binaryblazer.me",
     "url": "https://binaryblazer.me"
   },
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "packageManager": "pnpm@10.8.0",
   "devDependencies": {
     "prettier": "^3.5.3"

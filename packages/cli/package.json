@@ -1,6 +1,7 @@
 {
   "name": "@contentkit/cli",
   "version": "1.0.0",
+  "description": "Command line interface for ContentKit.",
   "publishConfig": {
     "access": "public"
   },
@@ -8,6 +9,7 @@
     "contentkit": "./distribution/index.js"
   },
   "packageManager": "pnpm@10.8.0",
+  "license": "BSD-3-Clause",
   "scripts": {
     "build": "tsc -b"
   },

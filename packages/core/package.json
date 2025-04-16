@@ -1,6 +1,7 @@
 {
   "name": "@contentkit/core",
   "version": "1.0.0",
+  "description": "Core library for ContentKit.",
   "publishConfig": {
     "access": "public"
   },
@@ -22,6 +23,7 @@
     "README.md",
     "LICENSE"
   ],
+  "license": "BSD-3-Clause",
   "exports": {
     "./build": "./distribution/build.js",
     "./build.d.ts": "./distribution/build.d.ts"
