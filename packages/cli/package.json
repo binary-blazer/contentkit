@@ -8,6 +8,8 @@
   "bin": {
     "contentkit": "./distribution/index.js"
   },
+  "main": "./distribution/index.js",
+  "types": "./distribution/index.d.ts",
   "packageManager": "pnpm@10.8.0",
   "license": "BSD-3-Clause",
   "scripts": {

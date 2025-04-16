@@ -1,0 +1,45 @@
+{
+  "name": "contentkit",
+  "version": "1.0.0",
+  "description": "Easily convert your MD(X) into JSON data.",
+  "keywords": [
+    "contentkit",
+    "content",
+    "sdk",
+    "cli",
+    "json",
+    "markdown",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "contentkit": "./distribution/cli.js"
+  },
+  "packageManager": "pnpm@10.8.0",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "files": [
+    "distribution",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@contentkit/cli": "workspace:*",
+    "@contentkit/generated": "workspace:*",
+    "@contentkit/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "exports": {
+    "./generated": "./distribution/generated.js",
+    "./generated.d.ts": "./distribution/generated.d.ts",
+    "./types": "./distribution/types.js",
+    "./types.d.ts": "./distribution/types.d.ts"
+  }
+}

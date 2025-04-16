@@ -14,6 +14,9 @@ importers:
 
   examples/blog:
     dependencies:
+      '@contentkit/generated':
+        specifier: workspace:*
+        version: link:../../packages/generated
       '@contentkit/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -34,6 +37,25 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
+  packages/contentkit:
+    dependencies:
+      '@contentkit/cli':
+        specifier: workspace:*
+        version: link:../cli
+      '@contentkit/generated':
+        specifier: workspace:*
+        version: link:../generated
+      '@contentkit/types':
+        specifier: workspace:*
+        version: link:../types
+    devDependencies:
+      '@types/node':
+        specifier: ^22.14.1
+        version: 22.14.1
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
   packages/core:
     dependencies:
       '@contentkit/types':
@@ -45,6 +67,15 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+    devDependencies:
+      '@types/node':
+        specifier: ^22.14.1
+        version: 22.14.1
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
+  packages/generated:
     devDependencies:
       '@types/node':
         specifier: ^22.14.1

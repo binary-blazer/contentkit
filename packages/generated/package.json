@@ -1,0 +1,26 @@
+{
+  "name": "@contentkit/generated",
+  "version": "1.0.0",
+  "description": "Access generated JSON data from ContentKit.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.8.0",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "files": [
+    "distribution",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "exports": {
+    ".": "./distribution/index.js",
+    "./index.d.ts": "./distribution/index.d.ts"
+  }
+}
