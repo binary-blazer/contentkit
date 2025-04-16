@@ -6,7 +6,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
-import { colors } from "../packages/utils/distribution/logger";
 
 const __dirname = path.resolve(path.dirname(""));
 const packagesDir = path.join(__dirname, "packages");
@@ -23,7 +22,7 @@ const publishPackage = (packageDir: string) => {
   const packageJSONPath = path.join(packageDir, "package.json");
   if (!fs.existsSync(packageJSONPath)) {
     console.log(
-      `${colors.gray}${truncatePath(packageDir, 60)}${colors.reset}: ${colors.red}package.json not found${colors.reset}, skipping...`,
+      `${truncatePath(packageDir, 60)}: package.json not found, skipping...`,
     );
     return;
   }
@@ -51,7 +50,7 @@ const publishPackage = (packageDir: string) => {
   fs.writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 
   console.log(
-    `${colors.gray}${truncatePath(packageDir, 60)}${colors.reset}: ${colors.yellow}publishing ${packageName}@${packageVersion}${colors.reset}...`,
+    `${truncatePath(packageDir, 60)}: publishing ${packageName}@${packageVersion}...`,
   );
 
   try {
@@ -64,13 +63,9 @@ const publishPackage = (packageDir: string) => {
       stdio: "inherit",
     });
 
-    console.log(
-      `${colors.gray}${truncatePath(packageDir, 60)}${colors.reset}: ${colors.green}published successfully${colors.reset}`,
-    );
+    console.log(`${truncatePath(packageDir, 60)}: published successfully`);
   } catch (error) {
-    console.error(
-      `${colors.gray}${truncatePath(packageDir, 60)}${colors.reset}: ${colors.red}failed to publish${colors.reset}`,
-    );
+    console.error(`${truncatePath(packageDir, 60)}: failed to publish`);
   }
 };
 
@@ -87,9 +82,7 @@ const publishAllPackages = () => {
 
 const main = () => {
   if (!process.env.NPM_TOKEN) {
-    console.error(
-      `${colors.red}Error: NPM_TOKEN environment variable is not set.${colors.reset}`,
-    );
+    console.error(`Error: NPM_TOKEN environment variable is not set.`);
     process.exit(1);
   }
 

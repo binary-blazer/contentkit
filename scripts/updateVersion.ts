@@ -5,7 +5,6 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { colors } from "../packages/utils/distribution/logger";
 
 const __dirname = path.resolve(path.dirname(""));
 const packagesDir = path.join(__dirname, "packages");
@@ -28,20 +27,14 @@ const updateVersionInPackageJSON = (filePath: string) => {
   const truncatedPath = truncatePath(filePath, 60);
 
   if (oldVersion === version)
-    return console.log(
-      `${colors.gray}${truncatedPath}${colors.reset}: ${colors.yellow}same version${colors.reset}, skipping...`,
-    );
+    return console.log(`${truncatedPath}: same version, skipping...`);
   if (oldVersion === undefined)
-    return console.log(
-      `${colors.gray}${truncatedPath}${colors.reset}: ${colors.red}version not found${colors.reset}, skipping...`,
-    );
+    return console.log(`${truncatedPath}: version not found, skipping...`);
 
   packageJSON.version = version;
   fs.writeFileSync(filePath, JSON.stringify(packageJSON, null, 2), "utf-8");
 
-  console.log(
-    `${colors.gray}${truncatedPath}${colors.reset}: ${colors.green}${oldVersion}${colors.reset} -> ${colors.cyan}${version}${colors.reset}`,
-  );
+  console.log(`${truncatedPath}: ${oldVersion} -> ${version}`);
 };
 
 const updateVersionInAllPackages = () => {

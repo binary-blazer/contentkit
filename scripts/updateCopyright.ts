@@ -5,7 +5,6 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { colors } from "../packages/utils/distribution/logger";
 
 const __dirname = path.resolve(path.dirname(""));
 
@@ -28,17 +27,13 @@ const VALID_EXTENSIONS = [".ts"];
 function addCopyrightToFile(filePath: string) {
   const content = fs.readFileSync(filePath, "utf-8");
   if (content.startsWith(COPYRIGHT_NOTICE)) {
-    console.log(
-      `${colors.yellow}Skipping${colors.reset} ${colors.gray}${filePath}${colors.reset}, copyright notice already present.`,
-    );
+    console.log(`Skipping ${filePath}, copyright notice already present.`);
     return;
   }
 
   const updatedContent = COPYRIGHT_NOTICE + content;
   fs.writeFileSync(filePath, updatedContent, "utf-8");
-  console.log(
-    `${colors.green}Added${colors.reset} copyright notice to ${colors.gray}${filePath}${colors.reset}`,
-  );
+  console.log(`Added copyright notice to ${filePath}`);
 }
 
 function processDirectory(directory: string) {
