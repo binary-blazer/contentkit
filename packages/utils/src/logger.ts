@@ -24,7 +24,7 @@ const knownErrors: Record<string, KnownError> = {
     id: "CONFIG_NOT_FOUND",
     code: "E001",
     message: "No contentkit config file found.",
-    docsUrl: "https://docs.contentkit.dev/errors#E001",
+    docsUrl: "https://contentkit.dev/docs/errors#E001",
   },
 };
 
