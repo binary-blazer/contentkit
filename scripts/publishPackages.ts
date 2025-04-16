@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
@@ -23,6 +24,13 @@ const publishPackage = (packageDir: string) => {
   if (!fs.existsSync(packageJSONPath)) {
     console.log(
       `${truncatePath(packageDir, 60)}: package.json not found, skipping...`,
+    );
+    return;
+  }
+
+  if (!process.env.NPM_TOKEN) {
+    console.error(
+      `${truncatePath(packageDir, 60)}: NPM_TOKEN is not set, skipping...`,
     );
     return;
   }
