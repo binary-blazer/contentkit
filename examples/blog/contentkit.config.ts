@@ -11,6 +11,14 @@ const config: ContentKitConfig = {
         date: { type: "date", required: true },
       },
     },
+    {
+      name: "Content",
+      filePathPattern: "posts/*.md",
+      fields: {
+        title: { type: "string", required: true },
+        date: { type: "date", required: true },
+      },
+    },
   ],
 };
 

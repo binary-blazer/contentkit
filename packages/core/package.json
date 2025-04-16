@@ -10,13 +10,15 @@
     "build": "tsc -b"
   },
   "devDependencies": {
+    "@types/marked": "^6.0.0",
     "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
   },
   "dependencies": {
     "@contentkit/types": "workspace:*",
     "globby": "^14.1.0",
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.8"
   },
   "files": [
     "distribution",

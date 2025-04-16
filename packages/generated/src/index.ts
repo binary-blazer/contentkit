@@ -10,7 +10,9 @@ export async function loadGeneratedData(docType: string): Promise<any[]> {
     return JSON.parse(data);
   } catch (err) {
     if ((err as any).code === "ENOENT") {
-      throw new Error(`Generated data for document type "${docType}" not found.`);
+      throw new Error(
+        `Generated data for document type "${docType}" not found.`,
+      );
     }
     throw err;
   }

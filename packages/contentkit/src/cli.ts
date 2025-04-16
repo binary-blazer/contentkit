@@ -1,1 +1,1 @@
-export * from '@contentkit/cli';
+export * from "@contentkit/cli";

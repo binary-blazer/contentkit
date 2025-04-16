@@ -1,1 +1,1 @@
-export * from '@contentkit/types';
+export * from "@contentkit/types";
