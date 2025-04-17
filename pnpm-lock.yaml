@@ -61,6 +61,9 @@ importers:
       '@ckjs/types':
         specifier: workspace:*
         version: link:../types
+      '@ckjs/utils':
+        specifier: workspace:*
+        version: link:../utils
       globby:
         specifier: ^14.1.0
         version: 14.1.0

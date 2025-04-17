@@ -4,11 +4,13 @@
  */
 
 import fs from "node:fs/promises";
-import matter from "gray-matter";
+import fsSync from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { globby } from "globby";
 import { marked } from "marked";
+import matter from "gray-matter";
+import { loadConfig } from "@ckjs/utils/load-config";
 import type { ContentKitConfig, ParsedContent } from "@ckjs/types";
 
 function generateTypeScriptTypesFile(
@@ -71,6 +73,18 @@ export declare const allDocuments: DocumentTypes[];
 `;
 }
 
+function determineIndexFileExtension(): string {
+  const packageJsonPath = path.join(process.cwd(), "package.json");
+  if (fsSync.existsSync(packageJsonPath)) {
+    const packageJson = JSON.parse(
+      fsSync.readFileSync(packageJsonPath, "utf-8"),
+    );
+    if (packageJson.type === "module") return ".mjs";
+    if (packageJson.type === "commonjs") return ".cjs";
+  }
+  return ".js";
+}
+
 export async function build(config: ContentKitConfig) {
   const output: ParsedContent[] = [];
   const cacheDir = path.join(".contentkit", ".cache");
@@ -78,6 +92,43 @@ export async function build(config: ContentKitConfig) {
 
   await fs.mkdir(cacheDir, { recursive: true });
   await fs.mkdir(generatedDir, { recursive: true });
+
+  const configNames = [
+    "contentkit.config.ts",
+    "contentkit.config.js",
+    "contentkit.config.mjs",
+    "contentkit.config.cjs",
+  ];
+
+  let configPath: string | undefined;
+  for (const name of configNames) {
+    const potentialPath = path.join(process.cwd(), name);
+    if (fsSync.existsSync(potentialPath)) {
+      configPath = potentialPath;
+      break;
+    }
+  }
+
+  if (!configPath) {
+    throw new Error("CONFIG_NOT_FOUND");
+  }
+
+  const configStat = fsSync.statSync(configPath);
+  const cacheConfigPath = path.join(cacheDir, "config.timestamp");
+  let shouldReloadConfig = true;
+
+  if (fsSync.existsSync(cacheConfigPath)) {
+    const cachedTimestamp = parseInt(
+      fsSync.readFileSync(cacheConfigPath, "utf-8"),
+      10,
+    );
+    shouldReloadConfig = configStat.mtimeMs > cachedTimestamp;
+  }
+
+  if (shouldReloadConfig) {
+    config = await loadConfig();
+    fsSync.writeFileSync(cacheConfigPath, configStat.mtimeMs.toString());
+  }
 
   const documentTypeNames: string[] = [];
 
@@ -109,7 +160,8 @@ export async function build(config: ContentKitConfig) {
   }
 
   const indexFileContent = generateIndexFile(config, cacheDir);
-  const indexFilePath = path.join(generatedDir, "index.mjs");
+  const indexFileExtension = determineIndexFileExtension();
+  const indexFilePath = path.join(generatedDir, `index${indexFileExtension}`);
   await fs.writeFile(indexFilePath, indexFileContent);
 
   const typesFileContent = generateTypeScriptTypesFile(config, generatedDir);
