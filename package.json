@@ -1,6 +1,6 @@
 {
   "name": "contentkit",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "description": "The monorepo for the ContentKit SDK",
   "workspaces": [
@@ -8,7 +8,7 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "pnpm -F ./packages/* build",
+    "build": "pnpm -r build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "scripts:uv": "tsx scripts/updateVersion.ts",
