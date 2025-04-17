@@ -45,7 +45,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          pnpm m ls --json --depth=-1 | jq -r '.[].path' | while read -r package; do
+          pnpm m ls --json --depth=-1 | jq -r '.[].path' | grep '/packages/' | while read -r package; do
             echo "Publishing package: $package"
             cd "$package"
             npm publish --access public --provenance --no-git-checks
