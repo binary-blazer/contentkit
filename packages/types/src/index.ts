@@ -21,7 +21,6 @@ export type FieldType = {
 
 export type ParsedContent = {
   typeName: string;
-  data: Record<string, any>;
   raw: string;
   html: string;
 };
