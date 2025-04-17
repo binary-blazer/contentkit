@@ -7,7 +7,6 @@ import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
 import process from "node:process";
-import { globby } from "globby";
 import { marked } from "marked";
 import matter from "gray-matter";
 import { loadConfig } from "@ckjs/utils/load-config";
@@ -93,6 +92,8 @@ function determineIndexFileExtension(): string {
 }
 
 export async function build(config: ContentKitConfig) {
+  const { globby } = await import("globby");
+
   const output: ParsedContent[] = [];
   const cacheDir = path.join(".contentkit", ".cache");
   const generatedDir = path.join(".contentkit", "generated");

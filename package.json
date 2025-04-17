@@ -1,6 +1,6 @@
 {
   "name": "contentkit",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "description": "The monorepo for the ContentKit SDK",
   "workspaces": [
