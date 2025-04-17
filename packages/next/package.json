@@ -1,7 +1,7 @@
 {
-  "name": "@ckjs/types",
+  "name": "@ckjs/next",
   "version": "0.0.7",
-  "description": "Type definitions for ContentKit",
+  "description": "Next.js client for ContentKit",
   "license": "BSD-3-Clause",
   "main": "./distribution/index.js",
   "types": "./distribution/index.d.ts",
@@ -10,7 +10,7 @@
   },
   "packageManager": "pnpm@10.8.0",
   "scripts": {
-    "build": "tsc -b"
+    "build": "tsc --skipLibCheck"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,18 @@
     "README.md",
     "LICENSE"
   ],
+  "dependencies": {
+    "@ckjs/core": "workspace:*",
+    "@ckjs/utils": "workspace:*",
+    "chokidar": "^3.5.3",
+    "lodash": "^4.17.21",
+    "next": "^15.3.1"
+  },
   "devDependencies": {
+    "@types/lodash": "^4.17.16",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
     "typescript": "^5.8.3"
   }
 }

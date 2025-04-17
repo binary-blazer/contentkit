@@ -33,7 +33,12 @@ const knownErrors: Record<string, KnownError> = {
   },
 };
 
-function log(level: LogLevel, message: string, details?: Partial<KnownError>) {
+function log(
+  level: LogLevel,
+  message: string,
+  mode: "next" | "contentkit" = "contentkit",
+  details?: Partial<KnownError>,
+) {
   const levelColors: Record<LogLevel, string> = {
     info: colors.blue,
     warn: colors.yellow,
@@ -41,13 +46,28 @@ function log(level: LogLevel, message: string, details?: Partial<KnownError>) {
     success: colors.green,
   };
 
+  const nextEmojis: Record<LogLevel, string> = {
+    info: "ℹ️",
+    warn: "⚠",
+    error: "❌",
+    success: "✓",
+  };
+
   const color = levelColors[level];
 
-  console.log(
-    `${color}${colors.bold}${level.toUpperCase()}${colors.reset} ${message}${
-      details?.code ? ` [${colors.gray}${details.code}${colors.reset}]` : ""
-    }`,
-  );
+  if (mode === "contentkit") {
+    console.log(
+      `${color}${colors.bold}${level.toUpperCase()}${colors.reset} ${message}${
+        details?.code ? ` [${colors.gray}${details.code}${colors.reset}]` : ""
+      }`,
+    );
+  }
+
+  if (mode === "next") {
+    console.log(
+      `${" "}${color}${colors.bold}${nextEmojis[level]}${colors.reset} ${message}`,
+    );
+  }
 
   const levelLength = level.toUpperCase().length - 1;
 
@@ -59,11 +79,14 @@ function log(level: LogLevel, message: string, details?: Partial<KnownError>) {
 }
 
 export const logger = {
-  info: (message: string) => log("info", message),
-  warn: (message: string) => log("warn", message),
-  error: (message: string, errorId?: string) => {
+  info: (message: string, mode: "next" | "contentkit") =>
+    log("info", message, mode),
+  warn: (message: string, mode: "next" | "contentkit") =>
+    log("warn", message, mode),
+  error: (message: string, mode: "next" | "contentkit", errorId?: string) => {
     const knownError = errorId ? knownErrors[errorId] : undefined;
-    log("error", knownError?.message || message, knownError);
+    log("error", knownError?.message || message, mode, knownError);
   },
-  success: (message: string) => log("success", message),
+  success: (message: string, mode: "next" | "contentkit") =>
+    log("success", message, mode),
 };

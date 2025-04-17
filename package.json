@@ -1,6 +1,6 @@
 {
   "name": "contentkit",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "description": "The monorepo for the ContentKit SDK",
   "workspaces": [
@@ -8,12 +8,13 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "pnpm -r build",
+    "build": "pnpm -F ./packages/* build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "scripts:uv": "tsx scripts/updateVersion.ts",
     "scripts:prepare": "tsx scripts/preparePackages.ts",
     "scripts:copyright": "tsx scripts/updateCopyright.ts",
+    "burnthemall": "tsx scripts/burnThemAll.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {

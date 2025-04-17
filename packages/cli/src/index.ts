@@ -12,6 +12,7 @@ async function main() {
     await build(config);
     logger.success(
       `Content build completed [${colors.gray}${formatTime(Date.now() - now)}${colors.reset}]`,
+      "contentkit",
     );
   } catch (err) {
     logger.error("No contentkit config found", (err as any).message);
