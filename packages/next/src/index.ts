@@ -37,6 +37,10 @@ export function withContentkit(nextConfig: NextConfig) {
             resolve();
             process.stdout.write = originalWrite;
           }
+          if (message.includes("Creating an optimized production build")) {
+            resolve();
+            process.stdout.write = originalWrite;
+          }
           return originalWrite.call(process.stdout, chunk, ...args);
         };
       });
