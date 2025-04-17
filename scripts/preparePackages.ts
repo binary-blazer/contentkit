@@ -33,13 +33,15 @@ const preparePackages = (packageDir: string) => {
   const dependencies = packageJSON.dependencies || {};
   const devDependencies = packageJSON.devDependencies || {};
 
-  for (const [depName, depVersion] of Object.entries({
-    ...dependencies,
-    ...devDependencies,
-  })) {
+  for (const [depName, depVersion] of Object.entries(dependencies)) {
     if (depName.startsWith("@ckjs/") && depVersion === "workspace:*") {
-      dependencies[depName] = packageVersion;
-      devDependencies[depName] = packageVersion;
+      dependencies[depName] = `^${packageVersion}`;
+    }
+  }
+
+  for (const [depName, depVersion] of Object.entries(devDependencies)) {
+    if (depName.startsWith("@ckjs/") && depVersion === "workspace:*") {
+      devDependencies[depName] = `^${packageVersion}`;
     }
   }
 
