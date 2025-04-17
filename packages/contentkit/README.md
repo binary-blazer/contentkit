@@ -1,4 +1,4 @@
-# <picture><source srcset="../../assets/logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="../../assets/logo-light.png" height="30" alt="ContentKit Logo" /></picture>&nbsp;ContentKit
+# <picture><source srcset="./assets/logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="./assets/logo-light.png" height="30" alt="ContentKit Logo" /></picture>&nbsp;ContentKit
 
 ContentKit is a powerful SDK for converting Markdown (or MDX) content into structured JSON data. It provides a complete solution for managing content in TypeScript projects, including type-safe configurations, a build system, and a CLI.
 

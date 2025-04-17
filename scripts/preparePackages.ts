@@ -50,6 +50,21 @@ const preparePackages = (packageDir: string) => {
 
   fs.writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 
+  const assetsFolder = path.join(__dirname, "assets");
+  const assetsDest = path.join(packageDir, "assets");
+
+  if (!fs.existsSync(assetsDest)) {
+    fs.mkdirSync(assetsDest, { recursive: true });
+  }
+  const assetFiles = fs.readdirSync(assetsFolder);
+  for (const file of assetFiles) {
+    const srcPath = path.join(assetsFolder, file);
+    const destPath = path.join(assetsDest, file);
+    if (!fs.existsSync(destPath)) {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+
   console.log(
     `${truncatePath(packageDir, 60)}: prepared ${packageName}@${packageVersion}...`,
   );

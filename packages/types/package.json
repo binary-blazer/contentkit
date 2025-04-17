@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/types",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Type definitions for ContentKit",
   "license": "BSD-3-Clause",
   "main": "./distribution/index.js",
@@ -21,6 +21,7 @@
     "url": "https://github.com/binary-blazer/contentkit/issues"
   },
   "files": [
+    "assets",
     "distribution",
     "README.md",
     "LICENSE"

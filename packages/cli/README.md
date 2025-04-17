@@ -1,4 +1,4 @@
-# @ckjs/cli
+# <picture><source srcset="./assets/logo-dark.png" media="(prefers-color-scheme: dark)" /><img src="./assets/logo-light.png" height="30" alt="ContentKit Logo" /></picture>&nbsp;@ckjs/cli
 
 Command-line interface for ContentKit.
 

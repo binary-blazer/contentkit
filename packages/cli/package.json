@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Command line interface for ContentKit",
   "publishConfig": {
     "access": "public"
@@ -24,6 +24,7 @@
     "url": "https://github.com/binary-blazer/contentkit/issues"
   },
   "files": [
+    "assets",
     "distribution",
     "README.md",
     "LICENSE"

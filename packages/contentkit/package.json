@@ -1,6 +1,6 @@
 {
   "name": "contentkit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "ContentKit is a powerful SDK for converting Markdown (or MDX) content into structured JSON data",
   "keywords": [
     "contentkit",
@@ -30,6 +30,7 @@
     "url": "https://github.com/binary-blazer/contentkit/issues"
   },
   "files": [
+    "assets",
     "distribution",
     "README.md",
     "LICENSE"
