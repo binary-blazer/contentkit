@@ -43,7 +43,7 @@ jobs:
 
       - name: Publish packages
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           pnpm m ls --json --depth=-1 | jq -r '.[].path' | grep '/packages/' | while read -r package; do
             echo "Publishing package: $package"
