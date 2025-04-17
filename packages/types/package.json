@@ -10,8 +10,7 @@
   },
   "packageManager": "pnpm@10.8.0",
   "scripts": {
-    "build": "tsc -b",
-    "scripts:publish": "npm publish --access public --provenance --no-git-checks"
+    "build": "tsc -b"
   },
   "files": [
     "distribution",

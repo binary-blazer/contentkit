@@ -9,7 +9,6 @@
   ],
   "scripts": {
     "build": "pnpm -r build",
-    "scripts:publish": "pnpm -r scripts:publish",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "scripts:uv": "tsx scripts/updateVersion.ts",
