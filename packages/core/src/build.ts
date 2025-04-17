@@ -153,12 +153,15 @@ export async function build(config: ContentKitConfig) {
       const raw = await fs.readFile(file, "utf-8");
       const { content, data } = matter(raw);
       const html = await marked(content);
-      docTypeOutput.push({
+
+      const parsedContent: ParsedContent = {
         typeName: docType.name,
         ...data,
         raw: content,
         html,
-      });
+      };
+
+      docTypeOutput.push(parsedContent);
     }
 
     const cacheFilePath = path.join(cacheDir, `${docType.name}.json`);
