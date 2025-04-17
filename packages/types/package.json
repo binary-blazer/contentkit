@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/types",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Type definitions for ContentKit",
   "license": "BSD-3-Clause",
   "main": "./distribution/index.js",
