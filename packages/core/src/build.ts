@@ -172,25 +172,32 @@ export async function build(config: ContentKitConfig) {
     output.push(...docTypeOutput);
   }
 
-  const indexFileContent = generateIndexFile(config, cacheDir);
-  const indexFileExtension = determineIndexFileExtension();
-  const indexFilePath = path.join(generatedDir, `index${indexFileExtension}`);
+  const isESM = config.outputFormat === "esm";
+
+  const indexFileContent = generateIndexFile(config, cacheDir, isESM);
+  const indexFilePath = path.join(generatedDir, `index.js`);
   await fs.writeFile(indexFilePath, indexFileContent);
 
-  const typesFileContent = generateTypeScriptTypesFile(config, generatedDir);
-  const typesFilePath = path.join(generatedDir, "types.d.ts");
-  await fs.writeFile(typesFilePath, typesFileContent);
+  const generateTypes = config.generateTypes !== false;
+  if (generateTypes) {
+    const typesFileContent = generateTypeScriptTypesFile(config, generatedDir);
+    const typesFilePath = path.join(generatedDir, "types.d.ts");
+    await fs.writeFile(typesFilePath, typesFileContent);
 
-  const indexTypesFileContent = generateIndexTypesFile(config);
-  const indexTypesFilePath = path.join(generatedDir, "index.d.ts");
-  await fs.writeFile(indexTypesFilePath, indexTypesFileContent);
+    const indexTypesFileContent = generateIndexTypesFile(config);
+    const indexTypesFilePath = path.join(generatedDir, "index.d.ts");
+    await fs.writeFile(indexTypesFilePath, indexTypesFileContent);
+  }
 }
 
-function generateIndexFile(config: ContentKitConfig, cacheDir: string): string {
+function generateIndexFile(
+  config: ContentKitConfig,
+  cacheDir: string,
+  isESM: boolean,
+): string {
   const imports = [];
   const exports = [];
   const allDocuments = [];
-  const isESM = determineIndexFileExtension() === ".mjs";
 
   for (const docType of config.documentTypes) {
     const variableName = `all${docType.name}s`;

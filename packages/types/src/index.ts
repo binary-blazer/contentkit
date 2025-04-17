@@ -5,6 +5,8 @@
 
 export type ContentKitConfig = {
   contentDirPath: string;
+  outputFormat: "cjs" | "esm";
+  generateTypes: boolean;
   documentTypes: DocumentTypeDefinition[];
 };
 
