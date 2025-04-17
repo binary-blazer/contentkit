@@ -20,7 +20,7 @@ function generateTypeScriptTypesFile(
   const documentTypes = config.documentTypes
     .map(
       (docType) =>
-        `export type ${docType.name} = {\n  _id: string;\n  _raw: any;\n  type: '${docType.name}';\n  ${Object.entries(
+        `export type ${docType.name} = {\n  _id: string;\n  _raw: any;\n  type: '${docType.name}';\n  raw: string;\n  html: string;\n  ${Object.entries(
           docType.fields,
         )
           .map(([fieldName, fieldType]) => {
