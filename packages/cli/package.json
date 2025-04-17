@@ -15,6 +15,14 @@
   "scripts": {
     "build": "tsc -b"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binary-blazer/contentkit.git"
+  },
+  "homepage": "https://github.com/binary-blazer/contentkit#readme",
+  "bugs": {
+    "url": "https://github.com/binary-blazer/contentkit/issues"
+  },
   "files": [
     "distribution",
     "README.md",
