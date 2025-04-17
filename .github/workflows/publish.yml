@@ -53,6 +53,6 @@ jobs:
           pnpm m ls --json --depth=-1 | jq -r '.[].path' | grep '/packages/' | while read -r package; do
             echo "Publishing package: $package"
             cd "$package"
-            npm publish --access public --provenance --no-git-checks --userconfig ~/.npmrc
+            npm publish --access public --provenance --no-git-checks --userconfig ~/.npmrc --repository-url=https://github.com/${{ github.repository }} --commit=${{ github.sha }}
             cd -
           done
