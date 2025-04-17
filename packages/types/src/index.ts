@@ -15,7 +15,7 @@ export type DocumentTypeDefinition = {
 };
 
 export type FieldType = {
-  type: "string" | "number" | "boolean" | "date";
+  type: "string" | "number" | "boolean" | "date" | "array";
   required?: boolean;
 };
 

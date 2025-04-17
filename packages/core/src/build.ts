@@ -24,7 +24,14 @@ function generateTypeScriptTypesFile(
           docType.fields,
         )
           .map(([fieldName, fieldType]) => {
-            const type = fieldType.type === "date" ? "Date" : fieldType.type;
+            let type;
+            if (fieldType.type === "date") {
+              type = "Date";
+            } else if (fieldType.type === "array") {
+              type = "string[]";
+            } else {
+              type = fieldType.type;
+            }
             const optional = fieldType.required ? "" : " | undefined";
             return `${fieldName}: ${type}${optional};`;
           })
