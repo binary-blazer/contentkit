@@ -1,10 +1,14 @@
+import { parse as yamlParse } from "yaml";
+import { parse as tomlParse } from "@iarna/toml";
+
 export function parse(content: string): {
   data: Record<string, any>;
   body: string;
 } {
   const delimiter = "---";
+  const tomlDelimiter = "\\+\\+\\+";
   const delimiterRegex = new RegExp(
-    `^${delimiter}\\s*([\\s\\S]*?)\\s*${delimiter}\\s*`,
+    `^(?:${delimiter}|${tomlDelimiter})\\s*([\\s\\S]*?)\\s*(?:${delimiter}|${tomlDelimiter})\\s*`,
   );
 
   const match = content.match(delimiterRegex);
@@ -16,17 +20,18 @@ export function parse(content: string): {
   const body = content.slice(match[0].length).trim();
 
   try {
-    const data = rawData.split("\n").reduce(
-      (acc, line) => {
-        const [key, ...valueParts] = line.split(":");
-        if (!key || valueParts.length === 0) {
-          throw new Error("INVALID_FRONTMATTER_FORMAT");
-        }
-        acc[key.trim()] = valueParts.join(":").trim();
-        return acc;
-      },
-      {} as Record<string, any>,
-    );
+    let data;
+    if (content.startsWith(delimiter)) {
+      if (rawData.startsWith("{") && rawData.endsWith("}")) {
+        data = JSON.parse(rawData); // JSON frontmatter
+      } else {
+        data = yamlParse(rawData); // YAML frontmatter
+      }
+    } else if (content.startsWith("+++")) {
+      data = tomlParse(rawData); // TOML frontmatter
+    } else {
+      throw new Error("INVALID_FRONTMATTER_FORMAT");
+    }
     return { data, body };
   } catch {
     throw new Error("INVALID_FRONTMATTER_FORMAT");

@@ -15,14 +15,18 @@ async function main() {
       "contentkit",
     );
   } catch (err) {
-    const message = (err as any).message.split("Error: ")[1];
+    const message = (err as any).message.startsWith("Error: ") ? (err as any).message.split("Error: ")[1] : (err as any).message;
     const error = knownErrors[message] || knownErrors["unknown"];
 
     try {
       logger.error(error.message, "contentkit");
       process.exit(1);
     } catch (e) {
-      console.log(error);
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(err);
+      }
       process.exit(1);
     }
   }

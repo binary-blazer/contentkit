@@ -7,10 +7,11 @@ const config: ContentKitConfig = {
   documentTypes: [
     {
       name: "Post",
-      filePathPattern: "posts/*.md",
+      filePathPattern: "./*.md",
       fields: {
         title: { type: "string", required: true },
         date: { type: "date", required: true },
+        tags: { type: "array", required: true },
       },
     },
   ],
