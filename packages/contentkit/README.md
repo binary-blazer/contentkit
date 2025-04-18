@@ -9,8 +9,10 @@ ContentKit is a powerful SDK for converting Markdown (or MDX) content into struc
 
 - **Type-safe configurations**: Define your content structure with TypeScript types.
 - **Markdown processing**: Convert Markdown content into JSON with metadata and HTML.
+- **Multi-format frontmatter support**: Parse YAML, JSON, and TOML frontmatter seamlessly.
 - **Auto-generated types**: Automatically generate TypeScript types for your content.
 - **CLI**: Build your content with a single command.
+- **Next.js integration**: Automatically rebuild content in Next.js projects.
 - **Extensible**: Modular design with utilities, core functionality, and CLI.
 
 ## Packages
@@ -21,6 +23,8 @@ ContentKit is a monorepo with the following packages:
 - [`@ckjs/types`](./packages/types): Type definitions for ContentKit.
 - [`@ckjs/core`](./packages/core): Core library for building and processing content.
 - [`@ckjs/cli`](./packages/cli): Command-line interface for ContentKit.
+- [`@ckjs/matter`](./packages/matter): Frontmatter parser for YAML, JSON, and TOML.
+- [`@ckjs/next`](./packages/next): Next.js client for ContentKit.
 
 ## Installation
 
