@@ -2,7 +2,7 @@
 
 import { build } from "@ckjs/core/build";
 import { loadConfig } from "@ckjs/utils/load-config";
-import { logger, colors } from "@ckjs/utils/logger";
+import { logger, colors, knownErrors } from "@ckjs/utils/logger";
 import process from "node:process";
 
 async function main() {
@@ -15,8 +15,16 @@ async function main() {
       "contentkit",
     );
   } catch (err) {
-    logger.error("No contentkit config found", (err as any).message);
-    process.exit(1);
+    const message = (err as any).message.split("Error: ")[1];
+    const error = knownErrors[message] || knownErrors["unknown"];
+
+    try {
+      logger.error(error.message, "contentkit");
+      process.exit(1);
+    } catch (e) {
+      console.log(error);
+      process.exit(1);
+    }
   }
 }
 

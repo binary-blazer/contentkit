@@ -24,12 +24,29 @@ type KnownError = {
   docsUrl?: string;
 };
 
-const knownErrors: Record<string, KnownError> = {
+export const knownErrors: Record<string, KnownError> = {
   CONFIG_NOT_FOUND: {
     id: "CONFIG_NOT_FOUND",
     code: "E001",
     message: "No contentkit config file found.",
     docsUrl: "https://contentkit.dev/docs/errors#E001",
+  },
+  INVALID_FRONTMATTER_FORMAT: {
+    id: "INVALID_FRONTMATTER_FORMAT",
+    code: "E002",
+    message: "Invalid frontmatter format.",
+    docsUrl: "https://contentkit.dev/docs/errors#E002",
+  },
+  INVALID_FRONTMATTER_FORMAT_NO_DELIMITER: {
+    id: "INVALID_FRONTMATTER_FORMAT_NO_DELIMITER",
+    code: "E003",
+    message:
+      "Invalid frontmatter format. No delimiter found.\n" +
+      "Make sure to use the correct frontmatter format. The frontmatter should be in the following format:\n\n" +
+      "---\n" +
+      "key: value\n" +
+      "---",
+    docsUrl: "https://contentkit.dev/docs/errors#E003",
   },
 };
 

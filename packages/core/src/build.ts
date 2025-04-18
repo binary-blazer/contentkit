@@ -8,8 +8,8 @@ import fsSync from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { marked } from "marked";
-import matter from "gray-matter";
 import { loadConfig } from "@ckjs/utils/load-config";
+import { parse as parseFrontmatter } from "@ckjs/matter";
 import type { ContentKitConfig, ParsedContent } from "@ckjs/types";
 
 function generateTypeScriptTypesFile(
@@ -79,18 +79,6 @@ export declare const allDocuments: DocumentTypes[];
 `;
 }
 
-function determineIndexFileExtension(): string {
-  const packageJsonPath = path.join(process.cwd(), "package.json");
-  if (fsSync.existsSync(packageJsonPath)) {
-    const packageJson = JSON.parse(
-      fsSync.readFileSync(packageJsonPath, "utf-8"),
-    );
-    if (packageJson.type === "module") return ".mjs";
-    if (packageJson.type === "commonjs") return ".cjs";
-  }
-  return ".js";
-}
-
 export async function build(config: ContentKitConfig) {
   const { globby } = await import("globby");
 
@@ -151,13 +139,24 @@ export async function build(config: ContentKitConfig) {
     const docTypeOutput: ParsedContent[] = [];
     for (const file of files) {
       const raw = await fs.readFile(file, "utf-8");
-      const { content, data } = matter(raw);
-      const html = await marked(content);
+
+      let data: Record<string, any>;
+      let body: string;
+
+      try {
+        const parsed = parseFrontmatter(raw);
+        data = parsed.data;
+        body = parsed.body;
+      } catch (error) {
+        throw new Error(error as any);
+      }
+
+      const html = await marked(body);
 
       const parsedContent: ParsedContent = {
         typeName: docType.name,
         ...data,
-        raw: content,
+        raw: body,
         html,
       };
 

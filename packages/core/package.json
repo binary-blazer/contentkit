@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/core",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Core library for ContentKit",
   "publishConfig": {
     "access": "public"
@@ -25,8 +25,8 @@
   "dependencies": {
     "@ckjs/types": "workspace:*",
     "@ckjs/utils": "workspace:*",
+    "@ckjs/matter": "workspace:*",
     "globby": "^14.1.0",
-    "gray-matter": "^4.0.3",
     "marked": "^15.0.8"
   },
   "files": [

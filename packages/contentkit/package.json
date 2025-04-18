@@ -1,6 +1,6 @@
 {
   "name": "contentkit",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "ContentKit is a powerful SDK for converting Markdown (or MDX) content into structured JSON data",
   "keywords": [
     "contentkit",

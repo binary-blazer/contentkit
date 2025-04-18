@@ -1,12 +1,9 @@
 {
-  "name": "@ckjs/cli",
+  "name": "@ckjs/matter",
   "version": "0.0.14",
-  "description": "Command line interface for ContentKit",
+  "description": "Frontmatter parser for ContentKit",
   "publishConfig": {
     "access": "public"
-  },
-  "bin": {
-    "contentkit": "./distribution/index.js"
   },
   "main": "./distribution/index.js",
   "types": "./distribution/index.d.ts",
@@ -29,10 +26,6 @@
     "README.md",
     "LICENSE"
   ],
-  "dependencies": {
-    "@ckjs/utils": "workspace:*",
-    "@ckjs/core": "workspace:*"
-  },
   "devDependencies": {
     "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
