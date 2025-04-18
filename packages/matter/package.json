@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/matter",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Frontmatter parser for ContentKit",
   "publishConfig": {
     "access": "public"
@@ -31,6 +31,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@ckjs/utils": "workspace:*",
     "@iarna/toml": "^2.2.5",
     "yaml": "^2.7.1"
   }

@@ -9,7 +9,8 @@ import path from "node:path";
 import process from "node:process";
 import { marked } from "marked";
 import { loadConfig } from "@ckjs/utils/load-config";
-import { parse as parseFrontmatter } from "@ckjs/matter";
+import { logger, colors } from "@ckjs/utils/logger";
+import { parseInternal as parseFrontmatter } from "@ckjs/matter";
 import type { ContentKitConfig, ParsedContent } from "@ckjs/types";
 
 function generateTypeScriptTypesFile(
@@ -127,6 +128,7 @@ export async function build(config: ContentKitConfig) {
   }
 
   const documentTypeNames: string[] = [];
+  const validationErrors: string[] = [];
 
   for (const docType of config.documentTypes) {
     documentTypeNames.push(docType.name);
@@ -144,9 +146,20 @@ export async function build(config: ContentKitConfig) {
       let body: string;
 
       try {
-        const parsed = parseFrontmatter(raw);
+        const parsed = parseFrontmatter(raw, file);
         data = parsed.data;
         body = parsed.body;
+
+        for (const [fieldName, fieldType] of Object.entries(docType.fields)) {
+          const value = data[fieldName];
+          const isValid = validateFieldType(value, fieldType.type);
+
+          if (!isValid) {
+            validationErrors.push(
+              `${colors.red}Invalid${colors.reset} type for field "${colors.gray}${fieldName}${colors.reset}" in file "${colors.gray}${file}${colors.reset}". Expected "${colors.yellow}${fieldType.type}${colors.reset}", got "${colors.cyan}${typeof value}${colors.reset}".`,
+            );
+          }
+        }
       } catch (error) {
         throw new Error(error as any);
       }
@@ -174,6 +187,25 @@ export async function build(config: ContentKitConfig) {
     output.push(...docTypeOutput);
   }
 
+  if (validationErrors.length > 0) {
+    const longestErrorLength = validationErrors.reduce((a, b) =>
+      a.length > b.length ? a : b,
+    ).length;
+
+    logger.error("Validating field types:", "contentkit");
+    console.log(
+      `${colors.gray}-${colors.reset}`.repeat(longestErrorLength / 1.3 + 2),
+    );
+    console.log(
+      validationErrors
+        .map((error) => error)
+        .map((error) => error.padEnd(longestErrorLength + 2))
+        .join("\n"),
+    );
+
+    process.exit(1);
+  }
+
   const isESM = config.outputFormat === "esm";
 
   const indexFileContent = generateIndexFile(config, cacheDir, isESM);
@@ -189,6 +221,23 @@ export async function build(config: ContentKitConfig) {
     const indexTypesFileContent = generateIndexTypesFile(config);
     const indexTypesFilePath = path.join(generatedDir, "index.d.ts");
     await fs.writeFile(indexTypesFilePath, indexTypesFileContent);
+  }
+}
+
+function validateFieldType(value: any, expectedType: string): boolean {
+  switch (expectedType) {
+    case "string":
+      return typeof value === "string";
+    case "number":
+      return typeof value === "number";
+    case "boolean":
+      return typeof value === "boolean";
+    case "date":
+      return value instanceof Date || !isNaN(Date.parse(value));
+    case "array":
+      return Array.isArray(value);
+    default:
+      return false;
   }
 }
 

@@ -89,6 +89,9 @@ importers:
 
   packages/matter:
     dependencies:
+      '@ckjs/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@iarna/toml':
         specifier: ^2.2.5
         version: 2.2.5
