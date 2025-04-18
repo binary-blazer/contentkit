@@ -15,7 +15,9 @@ async function main() {
       "contentkit",
     );
   } catch (err) {
-    const message = (err as any).message.startsWith("Error: ") ? (err as any).message.split("Error: ")[1] : (err as any).message;
+    const message = (err as any).message.startsWith("Error: ")
+      ? (err as any).message.split("Error: ")[1]
+      : (err as any).message;
     const error = knownErrors[message] || knownErrors["unknown"];
 
     try {
