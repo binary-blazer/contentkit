@@ -6,6 +6,7 @@
 import { parse as yamlParse } from "yaml";
 import { parse as tomlParse } from "@iarna/toml";
 import { logger, colors } from "@ckjs/utils/logger";
+import path from "node:path";
 
 export function parseInternal(
   content: string,
@@ -23,7 +24,7 @@ export function parseInternal(
   const match = content.match(delimiterRegex);
   if (!match) {
     logger.error(
-      `The content does not contain frontmatter in ${colors.gray}${filePath}${colors.reset}`,
+      `The content does not contain frontmatter in ${colors.gray}${path.relative(process.cwd(), filePath)}${colors.reset}`,
       "contentkit",
     );
     return process.exit(1);
@@ -37,7 +38,8 @@ export function parseInternal(
     const trimmedMatch = match[0].trim();
     if (trimmedMatch.startsWith(delimiter)) {
       if (rawData.startsWith("{") && rawData.endsWith("}")) {
-        data = JSON.parse(rawData); // JSON frontmatter
+        const sanitizedRawData = rawData.replace(/,\s*}$/, "}");
+        data = JSON.parse(sanitizedRawData); // JSON frontmatter
       } else {
         data = yamlParse(rawData); // YAML frontmatter
       }
@@ -45,7 +47,7 @@ export function parseInternal(
       data = tomlParse(rawData); // TOML frontmatter
     } else {
       logger.error(
-        `The frontmatter format is not supported. Please use YAML, JSON or TOML in ${colors.gray}${filePath}${colors.reset}`,
+        `The frontmatter format is not supported. Please use YAML, JSON or TOML in ${colors.gray}${path.relative(process.cwd(), filePath)}${colors.reset}`,
         "contentkit",
       );
       return process.exit(1);
@@ -53,7 +55,7 @@ export function parseInternal(
     return { data, body };
   } catch (error) {
     logger.error(
-      `Error parsing frontmatter in ${colors.gray}${filePath}${colors.reset}: ${(error as any).message}`,
+      `Error parsing frontmatter in ${colors.gray}${path.relative(process.cwd(), filePath)}${colors.reset}: ${(error as any).message}`,
       "contentkit",
     );
     return process.exit(1);
@@ -83,7 +85,8 @@ export function parse(content: string): {
     const trimmedMatch = match[0].trim();
     if (trimmedMatch.startsWith(delimiter)) {
       if (rawData.startsWith("{") && rawData.endsWith("}")) {
-        data = JSON.parse(rawData); // JSON frontmatter
+        const sanitizedRawData = rawData.replace(/,\s*}$/, "}");
+        data = JSON.parse(sanitizedRawData); // JSON frontmatter
       } else {
         data = yamlParse(rawData); // YAML frontmatter
       }
