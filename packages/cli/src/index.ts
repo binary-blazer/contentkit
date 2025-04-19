@@ -10,7 +10,7 @@ const program = new Command();
 program
   .name("contentkit")
   .description("ContentKit CLI - Manage and build your content")
-  .version("0.0.16");
+  .version("0.1.0");
 
 program.addCommand(buildCommand);
 program.addCommand(initCommand);
