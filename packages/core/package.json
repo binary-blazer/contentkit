@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/core",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Core library for ContentKit",
   "publishConfig": {
     "access": "public"

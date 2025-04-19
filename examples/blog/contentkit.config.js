@@ -1,6 +1,5 @@
-import type { ContentKitConfig } from "contentkit/types";
-
-const config: ContentKitConfig = {
+/** @type {import("contentkit/types").ContentKitConfig} */
+const config = {
   contentDirPath: "content",
   outputFormat: "esm",
   generateTypes: true,
@@ -9,9 +8,9 @@ const config: ContentKitConfig = {
       name: "Post",
       filePathPattern: "./*.md",
       fields: {
-        title: { type: "string", required: true },
+        title: { type: "date", required: true },
         date: { type: "date", required: true },
-        tags: { type: "array", required: true },
+        tags: { type: "list", required: true, items: { type: "string" } },
       },
     },
   ],

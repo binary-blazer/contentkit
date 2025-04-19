@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/cli",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Command line interface for ContentKit",
   "publishConfig": {
     "access": "public"
@@ -30,8 +30,9 @@
     "LICENSE"
   ],
   "dependencies": {
+    "@ckjs/core": "workspace:*",
     "@ckjs/utils": "workspace:*",
-    "@ckjs/core": "workspace:*"
+    "commander": "^13.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

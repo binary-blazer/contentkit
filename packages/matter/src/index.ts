@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Jonas Franke and the ContentKit Contributors
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 import { parse as yamlParse } from "yaml";
 import { parse as tomlParse } from "@iarna/toml";
 import { logger, colors } from "@ckjs/utils/logger";
