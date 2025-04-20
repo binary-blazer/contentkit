@@ -69,3 +69,18 @@ jobs:
             fi
             cd -
           done
+
+      - name: Create GitHub Release
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "${{ github.event.inputs.mode }}" == "canary" ]; then
+            IS_PRERELEASE=true
+          else
+            IS_PRERELEASE=false
+          fi
+          TAG="v$VERSION"
+          DESCRIPTION="Automated release publish for ContentKit $TAG"
+          gh release create "$TAG" --title "$TAG" --notes "$DESCRIPTION" --prerelease=$IS_PRERELEASE
