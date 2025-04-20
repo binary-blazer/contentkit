@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
+let canaryVersion = "";
 const __dirname = path.resolve(path.dirname(""));
 const packagesDir = path.join(__dirname, "packages");
 
@@ -15,6 +16,21 @@ const truncatePath = (filePath: string, maxLength: number): string => {
   if (relativePath.length <= maxLength) return relativePath;
   const halfLength = Math.floor((maxLength - 3) / 2);
   return `${relativePath.slice(0, halfLength)}...${relativePath.slice(-halfLength)}`;
+};
+
+const updateRootPackageVersion = (isCanary: boolean) => {
+  const rootPackageJSONPath = path.join(__dirname, "package.json");
+  if (!fs.existsSync(rootPackageJSONPath)) {
+    console.log("Root package.json not found, skipping...");
+    return;
+  }
+
+  const rootPackageJSON = JSON.parse(fs.readFileSync(rootPackageJSONPath, "utf-8"));
+  if (isCanary) {
+    rootPackageJSON.version = canaryVersion;
+    fs.writeFileSync(rootPackageJSONPath, JSON.stringify(rootPackageJSON, null, 2));
+    console.log(`Root package.json updated to version ${canaryVersion}`);
+  }
 };
 
 const preparePackages = (packageDir: string, isCanary: boolean) => {
@@ -31,8 +47,7 @@ const preparePackages = (packageDir: string, isCanary: boolean) => {
   let packageVersion = packageJSON.version;
 
   if (isCanary) {
-    const randomSuffix = Math.floor(100000000 + Math.random() * 900000000);
-    packageVersion = `${packageVersion}-canary.${randomSuffix}`;
+    packageVersion = canaryVersion;
     packageJSON.version = packageVersion;
   }
 
@@ -77,6 +92,11 @@ const preparePackages = (packageDir: string, isCanary: boolean) => {
 };
 
 const prepareAllPackages = (isCanary: boolean) => {
+  if (isCanary) {
+    const randomSuffix = Math.floor(100000000 + Math.random() * 900000000);
+    canaryVersion = `0.1.1-canary.${randomSuffix}`; // Generate the canary version once
+  }
+
   const packageDirs = fs
     .readdirSync(packagesDir)
     .map((dir) => path.join(packagesDir, dir))
@@ -84,6 +104,10 @@ const prepareAllPackages = (isCanary: boolean) => {
 
   for (const packageDir of packageDirs) {
     preparePackages(packageDir, isCanary);
+  }
+
+  if (isCanary) {
+    updateRootPackageVersion(isCanary);
   }
 
   console.log("All packages prepared successfully.");
