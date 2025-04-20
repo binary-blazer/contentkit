@@ -2,6 +2,11 @@ name: Publish Packages
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Publish mode (canary or stable)"
+        required: true
+        default: "stable"
 
 jobs:
   publish:
@@ -13,6 +18,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.mode == 'canary' && 'canary' || 'master' }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4.1.0
@@ -40,7 +47,12 @@ jobs:
         run: pnpm build
 
       - name: Prepare packages
-        run: pnpm scripts:prepare
+        run: |
+          if [ "${{ github.event.inputs.mode }}" == "canary" ]; then
+            pnpm scripts:prepare --canary
+          else
+            pnpm scripts:prepare
+          fi
 
       - name: Publish packages
         env:
@@ -50,6 +62,10 @@ jobs:
           pnpm m ls --json --depth=-1 | jq -r '.[].path' | grep '/packages/' | while read -r package; do
             echo "Publishing package: $package"
             cd "$package"
-            npm publish --access public --provenance --no-git-checks --userconfig ~/.npmrc
+            if [ "${{ github.event.inputs.mode }}" == "canary" ]; then
+              npm publish --access public --tag canary --provenance --no-git-checks --userconfig ~/.npmrc
+            else
+              npm publish --access public --provenance --no-git-checks --userconfig ~/.npmrc
+            fi
             cd -
           done

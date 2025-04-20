@@ -17,7 +17,7 @@ const truncatePath = (filePath: string, maxLength: number): string => {
   return `${relativePath.slice(0, halfLength)}...${relativePath.slice(-halfLength)}`;
 };
 
-const preparePackages = (packageDir: string) => {
+const preparePackages = (packageDir: string, isCanary: boolean) => {
   const packageJSONPath = path.join(packageDir, "package.json");
   if (!fs.existsSync(packageJSONPath)) {
     console.log(
@@ -28,7 +28,13 @@ const preparePackages = (packageDir: string) => {
 
   const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, "utf-8"));
   const packageName = packageJSON.name;
-  const packageVersion = packageJSON.version;
+  let packageVersion = packageJSON.version;
+
+  if (isCanary) {
+    const randomSuffix = Math.floor(100000000 + Math.random() * 900000000);
+    packageVersion = `${packageVersion}-canary.${randomSuffix}`;
+    packageJSON.version = packageVersion;
+  }
 
   const dependencies = packageJSON.dependencies || {};
   const devDependencies = packageJSON.devDependencies || {};
@@ -70,21 +76,22 @@ const preparePackages = (packageDir: string) => {
   );
 };
 
-const prepareAllPackages = () => {
+const prepareAllPackages = (isCanary: boolean) => {
   const packageDirs = fs
     .readdirSync(packagesDir)
     .map((dir) => path.join(packagesDir, dir))
     .filter((dir) => fs.statSync(dir).isDirectory());
 
   for (const packageDir of packageDirs) {
-    preparePackages(packageDir);
+    preparePackages(packageDir, isCanary);
   }
 
   console.log("All packages prepared successfully.");
 };
 
 const main = () => {
-  prepareAllPackages();
+  const isCanary = process.argv.includes("--canary");
+  prepareAllPackages(isCanary);
 };
 
 main();
