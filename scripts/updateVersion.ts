@@ -46,38 +46,8 @@ const updateVersionInAllPackages = () => {
   });
 };
 
-const cliIndexPath = path.join(__dirname, "packages", "cli", "src", "index.ts");
-
-const updateVersionInCLI = () => {
-  const cliIndexContent = fs.readFileSync(cliIndexPath, "utf-8");
-  const versionRegex = /(program\.version\(\s*['"])([\d.]+)(['"]\s*\))/;
-  const match = cliIndexContent.match(versionRegex);
-
-  if (!match) {
-    console.log(
-      `${truncatePath(cliIndexPath, 60)}: version not found, skipping...`,
-    );
-    return;
-  }
-
-  const oldVersion = match[2];
-  if (oldVersion === version) {
-    console.log(`${truncatePath(cliIndexPath, 60)}: same version, skipping...`);
-    return;
-  }
-
-  const updatedContent = cliIndexContent.replace(
-    versionRegex,
-    `$1${version}$3`,
-  );
-  fs.writeFileSync(cliIndexPath, updatedContent, "utf-8");
-
-  console.log(`${truncatePath(cliIndexPath, 60)}: ${oldVersion} -> ${version}`);
-};
-
 const main = () => {
   updateVersionInAllPackages();
-  updateVersionInCLI();
 };
 
 main();

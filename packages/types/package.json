@@ -1,6 +1,6 @@
 {
   "name": "@ckjs/types",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Type definitions for ContentKit",
   "license": "BSD-3-Clause",
   "main": "./distribution/index.js",
@@ -14,11 +14,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/contentkitjs/contentkit.git"
+    "url": "git+https://github.com/noreturndev/contentkit.git"
   },
-  "homepage": "https://github.com/contentkitjs/contentkit#readme",
+  "homepage": "https://github.com/noreturndev/contentkit#readme",
   "bugs": {
-    "url": "https://github.com/contentkitjs/contentkit/issues"
+    "url": "https://github.com/noreturndev/contentkit/issues"
   },
   "files": [
     "assets",
