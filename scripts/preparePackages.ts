@@ -25,10 +25,15 @@ const updateRootPackageVersion = (isCanary: boolean) => {
     return;
   }
 
-  const rootPackageJSON = JSON.parse(fs.readFileSync(rootPackageJSONPath, "utf-8"));
+  const rootPackageJSON = JSON.parse(
+    fs.readFileSync(rootPackageJSONPath, "utf-8"),
+  );
   if (isCanary) {
     rootPackageJSON.version = canaryVersion;
-    fs.writeFileSync(rootPackageJSONPath, JSON.stringify(rootPackageJSON, null, 2));
+    fs.writeFileSync(
+      rootPackageJSONPath,
+      JSON.stringify(rootPackageJSON, null, 2),
+    );
     console.log(`Root package.json updated to version ${canaryVersion}`);
   }
 };

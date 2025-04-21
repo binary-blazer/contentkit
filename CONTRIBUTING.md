@@ -9,7 +9,7 @@ Thank you for your interest in contributing to ContentKit! We welcome contributi
 2. **Clone the Repository**: Clone your forked repository to your local machine:
 
    ```bash
-   git clone https://github.com/contentkitjs/contentkit.git
+   git clone https://github.com/noreturndev/contentkit.git
    cd contentkit
    ```
 
