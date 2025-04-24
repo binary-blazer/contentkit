@@ -9,7 +9,12 @@ export function validateFieldType(
   value: any,
   expectedType: string,
   items?: ItemType,
+  required: boolean = false,
 ): boolean {
+  if (!required && value === undefined) {
+    return true;
+  }
+
   switch (expectedType) {
     case "string":
       return typeof value === "string";

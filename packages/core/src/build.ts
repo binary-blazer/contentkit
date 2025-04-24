@@ -84,8 +84,18 @@ export async function build(config: ContentKitConfig) {
               const value = data[fieldName];
               const isValid =
                 fieldType.type === "array" || fieldType.type === "list"
-                  ? validateFieldType(value, fieldType.type, fieldType.items)
-                  : validateFieldType(value, fieldType.type);
+                  ? validateFieldType(
+                      value,
+                      fieldType.type,
+                      fieldType.items,
+                      fieldType.required,
+                    )
+                  : validateFieldType(
+                      value,
+                      fieldType.type,
+                      undefined,
+                      fieldType.required,
+                    );
 
               if (!isValid) {
                 const relativeFilePath = path.relative(process.cwd(), file);
