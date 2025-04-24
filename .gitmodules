@@ -1,3 +1,6 @@
 [submodule "examples/next"]
 	path = examples/next
 	url = https://github.com/binary-blazer/contentkit-next-blog-demo.git
+[submodule "examples/javascript"]
+	path = examples/javascript
+	url = https://github.com/binary-blazer/contentkit-js-demo.git
