@@ -12,6 +12,29 @@ const config = {
         date: { type: "date", required: true },
         tags: { type: "list", required: true, items: { type: "string" } },
       },
+      computedFields: {
+        wordCount: {
+          type: "number",
+          resolve: (doc) => {
+            const content = doc.raw;
+            const words = content
+              .split(/\s+/)
+              .filter((word) => word.length > 0);
+            return words.length;
+          },
+        },
+        readingTime: {
+          type: "string",
+          resolve: (doc) => {
+            const content = doc.raw;
+            const words = content
+              .split(/\s+/)
+              .filter((word) => word.length > 0);
+            const readingTime = Math.ceil(words.length / 200);
+            return `${readingTime} min read`;
+          },
+        },
+      },
     },
   ],
 };

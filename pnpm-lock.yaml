@@ -21,8 +21,8 @@ importers:
   examples/blog:
     dependencies:
       contentkit:
-        specifier: workspace:*
-        version: link:../..
+        specifier: workspace:packages
+        version: link:../../packages/contentkit
 
   packages/cli:
     dependencies:

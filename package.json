@@ -1,5 +1,5 @@
 {
-  "name": "contentkit",
+  "name": "contentkit-monorepo",
   "version": "0.1.2",
   "type": "module",
   "description": "The monorepo for the ContentKit SDK",
