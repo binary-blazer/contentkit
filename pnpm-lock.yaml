@@ -27,8 +27,8 @@ importers:
   examples/next:
     dependencies:
       contentkit:
-        specifier: workspace:packages
-        version: link:../../packages/contentkit
+        specifier: ^0.1.1
+        version: 0.1.1(@types/node@20.17.30)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       framer-motion:
         specifier: ^12.7.4
         version: 12.9.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1226,11 +1226,33 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
+  '@ckjs/cli@0.1.1(@types/node@20.17.30)':
+    dependencies:
+      '@ckjs/core': 0.1.1(@types/node@20.17.30)
+      '@ckjs/utils': 0.1.1(@types/node@20.17.30)
+      commander: 13.1.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+
   '@ckjs/cli@0.1.1(@types/node@22.14.1)':
     dependencies:
       '@ckjs/core': 0.1.1(@types/node@22.14.1)
       '@ckjs/utils': 0.1.1(@types/node@22.14.1)
       commander: 13.1.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+
+  '@ckjs/core@0.1.1(@types/node@20.17.30)':
+    dependencies:
+      '@ckjs/matter': 0.1.1(@types/node@20.17.30)
+      '@ckjs/types': 0.1.1
+      '@ckjs/utils': 0.1.1(@types/node@20.17.30)
+      globby: 14.1.0
+      marked: 15.0.8
     transitivePeerDependencies:
       - '@swc/core'
       - '@swc/wasm'
@@ -1248,6 +1270,16 @@ snapshots:
       - '@swc/wasm'
       - '@types/node'
 
+  '@ckjs/matter@0.1.1(@types/node@20.17.30)':
+    dependencies:
+      '@ckjs/utils': 0.1.1(@types/node@20.17.30)
+      '@iarna/toml': 2.2.5
+      yaml: 2.7.1
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+
   '@ckjs/matter@0.1.1(@types/node@22.14.1)':
     dependencies:
       '@ckjs/utils': 0.1.1(@types/node@22.14.1)
@@ -1257,6 +1289,26 @@ snapshots:
       - '@swc/core'
       - '@swc/wasm'
       - '@types/node'
+
+  '@ckjs/next@0.1.1(@types/node@20.17.30)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@ckjs/core': 0.1.1(@types/node@20.17.30)
+      '@ckjs/utils': 0.1.1(@types/node@20.17.30)
+      chokidar: 3.6.0
+      lodash: 4.17.21
+      next: 15.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@opentelemetry/api'
+      - '@playwright/test'
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+      - babel-plugin-macros
+      - babel-plugin-react-compiler
+      - react
+      - react-dom
+      - sass
 
   '@ckjs/next@0.1.1(@types/node@22.14.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -1279,6 +1331,15 @@ snapshots:
       - sass
 
   '@ckjs/types@0.1.1': {}
+
+  '@ckjs/utils@0.1.1(@types/node@20.17.30)':
+    dependencies:
+      ts-node: 10.9.2(@types/node@20.17.30)(typescript@5.8.3)
+      typescript: 5.8.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
 
   '@ckjs/utils@0.1.1(@types/node@22.14.1)':
     dependencies:
@@ -1699,6 +1760,24 @@ snapshots:
 
   commander@13.1.0: {}
 
+  contentkit@0.1.1(@types/node@20.17.30)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@ckjs/cli': 0.1.1(@types/node@20.17.30)
+      '@ckjs/next': 0.1.1(@types/node@20.17.30)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@ckjs/types': 0.1.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@opentelemetry/api'
+      - '@playwright/test'
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+      - babel-plugin-macros
+      - babel-plugin-react-compiler
+      - react
+      - react-dom
+      - sass
+
   contentkit@0.1.1(@types/node@22.14.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@ckjs/cli': 0.1.1(@types/node@22.14.1)
@@ -2052,6 +2131,24 @@ snapshots:
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
+
+  ts-node@10.9.2(@types/node@20.17.30)(typescript@5.8.3):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.11
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 20.17.30
+      acorn: 8.14.1
+      acorn-walk: 8.3.4
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.8.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
 
   ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3):
     dependencies:
