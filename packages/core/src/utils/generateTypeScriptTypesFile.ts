@@ -31,6 +31,8 @@ export function generateTypeScriptTypesFile(
             const optional = fieldType.required ? "" : " | undefined";
             return `${fieldName}: ${type}${optional};`;
           })
+          .join("\n  ")}\n  ${Object.entries(docType.computedFields || {})
+          .map(([fieldName, field]) => `${fieldName}: ${field.type};`)
           .join("\n  ")}\n};`,
     )
     .join("\n\n");

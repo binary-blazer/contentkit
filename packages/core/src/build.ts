@@ -25,8 +25,10 @@ export async function build(config: ContentKitConfig) {
   const generatedDir = path.join(".contentkit", "generated");
   const packageJsonPath = path.join(".contentkit", "package.json");
 
-  await fs.mkdir(cacheDir, { recursive: true });
-  await fs.mkdir(generatedDir, { recursive: true });
+  await Promise.all([
+    fs.mkdir(cacheDir, { recursive: true }),
+    fs.mkdir(generatedDir, { recursive: true }),
+  ]);
 
   const randomVersion = `0.0.0-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
 
@@ -49,108 +51,96 @@ export async function build(config: ContentKitConfig) {
   await fs.writeFile(
     packageJsonPath,
     JSON.stringify(packageJsonContent, null, 2),
+    "utf-8",
   );
-
-  const configNames = [
-    "contentkit.config.ts",
-    "contentkit.config.js",
-    "contentkit.config.mjs",
-    "contentkit.config.cjs",
-  ];
-
-  let configPath: string | undefined;
-  for (const name of configNames) {
-    const potentialPath = path.join(process.cwd(), name);
-    if (fsSync.existsSync(potentialPath)) {
-      configPath = potentialPath;
-      break;
-    }
-  }
-
-  if (!configPath) {
-    throw new Error("CONFIG_NOT_FOUND");
-  }
-
-  const configStat = fsSync.statSync(configPath);
-  const cacheConfigPath = path.join(cacheDir, "config.timestamp");
-  let shouldReloadConfig = true;
-
-  if (fsSync.existsSync(cacheConfigPath)) {
-    const cachedTimestamp = parseInt(
-      fsSync.readFileSync(cacheConfigPath, "utf-8"),
-      10,
-    );
-    shouldReloadConfig = configStat.mtimeMs > cachedTimestamp;
-  }
-
-  if (shouldReloadConfig) {
-    config = await loadConfig();
-    fsSync.writeFileSync(cacheConfigPath, configStat.mtimeMs.toString());
-  }
 
   const documentTypeNames: string[] = [];
   const validationErrors: string[] = [];
 
-  for (const docType of config.documentTypes) {
-    documentTypeNames.push(docType.name);
+  await Promise.all(
+    config.documentTypes.map(async (docType) => {
+      documentTypeNames.push(docType.name);
 
-    const files = await globby(docType.filePathPattern, {
-      cwd: path.join(process.cwd(), config.contentDirPath),
-      absolute: true,
-    });
+      const files = await globby(docType.filePathPattern, {
+        cwd: path.join(process.cwd(), config.contentDirPath),
+        absolute: true,
+      });
 
-    const docTypeOutput: ParsedContent[] = [];
-    for (const file of files) {
-      const raw = await fs.readFile(file, "utf-8");
+      const docTypeOutput: ParsedContent[] = await Promise.all(
+        files.map(async (file) => {
+          const raw = await fs.readFile(file, "utf-8");
 
-      let data: Record<string, any>;
-      let body: string;
+          let data: Record<string, any>;
+          let body: string;
 
-      try {
-        const parsed = parseFrontmatter(raw, file);
-        data = parsed.data;
-        body = parsed.body;
+          try {
+            const parsed = parseFrontmatter(raw, file);
+            data = parsed.data;
+            body = parsed.body;
 
-        for (const [fieldName, fieldType] of Object.entries(docType.fields)) {
-          const value = data[fieldName];
-          const isValid =
-            fieldType.type === "array" || fieldType.type === "list"
-              ? validateFieldType(value, fieldType.type, fieldType.items)
-              : validateFieldType(value, fieldType.type);
+            for (const [fieldName, fieldType] of Object.entries(
+              docType.fields,
+            )) {
+              const value = data[fieldName];
+              const isValid =
+                fieldType.type === "array" || fieldType.type === "list"
+                  ? validateFieldType(
+                      value,
+                      fieldType.type,
+                      fieldType.items,
+                      fieldType.required,
+                    )
+                  : validateFieldType(
+                      value,
+                      fieldType.type,
+                      undefined,
+                      fieldType.required,
+                    );
 
-          if (!isValid) {
-            const relativeFilePath = path.relative(process.cwd(), file);
-            validationErrors.push(
-              `${colors.red}Invalid${colors.reset} type for field "${colors.gray}${fieldName}${colors.reset}" in file "${colors.gray}${relativeFilePath}${colors.reset}". Expected "${colors.yellow}${fieldType.type}${colors.reset}", got "${colors.cyan}${typeof value}${colors.reset}".`,
-            );
+              if (!isValid) {
+                const relativeFilePath = path.relative(process.cwd(), file);
+                validationErrors.push(
+                  `${colors.red}Invalid${colors.reset} type for field "${colors.gray}${fieldName}${colors.reset}" in file "${colors.gray}${relativeFilePath}${colors.reset}". Expected "${colors.yellow}${fieldType.type}${colors.reset}", got "${colors.cyan}${typeof value}${colors.reset}".`,
+                );
+              }
+            }
+          } catch (error) {
+            throw new Error((error as any).message);
           }
-        }
-      } catch (error) {
-        throw new Error((error as any).message);
-      }
 
-      const html = await marked(body);
+          const html = await marked(body);
 
-      const parsedContent: ParsedContent = {
-        typeName: docType.name,
-        ...data,
-        raw: body,
-        html,
-      };
+          const computedFields = docType.computedFields || {};
+          const computedData: Record<string, any> = {};
+          for (const [fieldName, { resolve }] of Object.entries(
+            computedFields,
+          )) {
+            computedData[fieldName] = resolve({ ...data, raw: body, html });
+          }
 
-      docTypeOutput.push(parsedContent);
-    }
+          return {
+            typeName: docType.name,
+            ...data,
+            ...computedData,
+            raw: body,
+            html,
+          } as ParsedContent;
+        }),
+      );
 
-    const cacheFilePath = path.join(cacheDir, `${docType.name}.json`);
-    await fs.writeFile(cacheFilePath, JSON.stringify(docTypeOutput, null, 2));
+      const cacheFilePath = path.join(cacheDir, `${docType.name}.json`);
+      const docTypeDir = path.join(generatedDir, docType.name);
+      const indexFilePath = path.join(docTypeDir, "_index.json");
 
-    const docTypeDir = path.join(generatedDir, docType.name);
-    await fs.mkdir(docTypeDir, { recursive: true });
-    const indexFilePath = path.join(docTypeDir, "_index.json");
-    await fs.writeFile(indexFilePath, JSON.stringify(docTypeOutput, null, 2));
+      await Promise.all([
+        fs.writeFile(cacheFilePath, JSON.stringify(docTypeOutput, null, 2)),
+        fs.mkdir(docTypeDir, { recursive: true }),
+        fs.writeFile(indexFilePath, JSON.stringify(docTypeOutput, null, 2)),
+      ]);
 
-    output.push(...docTypeOutput);
-  }
+      output.push(...docTypeOutput);
+    }),
+  );
 
   if (validationErrors.length > 0) {
     const longestErrorLength = validationErrors.reduce((a, b) =>
@@ -180,10 +170,12 @@ export async function build(config: ContentKitConfig) {
   if (generateTypes) {
     const typesFileContent = generateTypeScriptTypesFile(config, generatedDir);
     const typesFilePath = path.join(generatedDir, "types.d.ts");
-    await fs.writeFile(typesFilePath, typesFileContent);
-
     const indexTypesFileContent = generateIndexTypesFile(config);
     const indexTypesFilePath = path.join(generatedDir, "index.d.ts");
-    await fs.writeFile(indexTypesFilePath, indexTypesFileContent);
+
+    await Promise.all([
+      fs.writeFile(typesFilePath, typesFileContent),
+      fs.writeFile(indexTypesFilePath, indexTypesFileContent),
+    ]);
   }
 }

@@ -98,8 +98,13 @@ const preparePackages = (packageDir: string, isCanary: boolean) => {
 
 const prepareAllPackages = (isCanary: boolean) => {
   if (isCanary) {
+    const rootPackageJSONPath = path.join(__dirname, "package.json");
+    const rootPackageJSON = JSON.parse(
+      fs.readFileSync(rootPackageJSONPath, "utf-8"),
+    );
+    const baseVersion = rootPackageJSON.version.replace(/-canary\.\d+$/, "");
     const randomSuffix = Math.floor(100000000 + Math.random() * 900000000);
-    canaryVersion = `0.1.1-canary.${randomSuffix}`; // Generate the canary version once
+    canaryVersion = `${baseVersion}-canary.${randomSuffix}`;
   }
 
   const packageDirs = fs

@@ -4,3 +4,5 @@ LICENSE
 README.md
 pnpm-lock.yaml
 pnpm-workspace.yaml
+.next
+.contentkit
