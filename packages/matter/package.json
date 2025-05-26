@@ -14,11 +14,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/noreturndev/contentkit.git"
+    "url": "git+https://github.com/infinitejs/contentkit.git"
   },
-  "homepage": "https://github.com/noreturndev/contentkit#readme",
+  "homepage": "https://github.com/infinitejs/contentkit#readme",
   "bugs": {
-    "url": "https://github.com/noreturndev/contentkit/issues"
+    "url": "https://github.com/infinitejs/contentkit/issues"
   },
   "files": [
     "assets",
